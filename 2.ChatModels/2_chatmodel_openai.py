@@ -3,7 +3,11 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-model = ChatOpenAI(model='gpt-4', temperature=1.5, max_completion_tokens=10)
+model = ChatOpenAI(model='gpt-4', 
+                   temperature=1.5, 
+                   max_completion_tokens=10,
+                   
+                   )
 
 result = model.invoke("List Iphones released in last 5 years")
 
