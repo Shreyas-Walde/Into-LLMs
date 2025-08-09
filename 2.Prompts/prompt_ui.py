@@ -34,6 +34,4 @@ if st.button("Summarize"):
     })
 
     st.write(result.content)    
-
-
-
+ 
