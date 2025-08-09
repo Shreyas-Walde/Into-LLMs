@@ -1,4 +1,5 @@
 from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_core.messages import SystemMessage, AIMessage, HumanMessage
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -23,14 +24,16 @@ model = ChatGoogleGenerativeAI(model='gemini-2.5-flash')
 # )
 # model = ChatHuggingFace(llm=llm)
 #-------------------------------------------------
-chat_history = []
+chat_history = [
+    SystemMessage(content = "You are a helpful assisant and a tutor explain in less than 5 line")
+]
 while True: 
     user_input = input('You: ')
-    chat_history.append(user_input)
+    chat_history.append(HumanMessage(content=user_input))
     if user_input == 'exit':
         break
     result = model.invoke(chat_history)
-    chat_history.append(result.content)  # .content to avoid vectors
+    chat_history.append(AIMessage(content=result.content))  # .content to avoid vectors
     print("AI: ",result.content)
 
 print(chat_history)
