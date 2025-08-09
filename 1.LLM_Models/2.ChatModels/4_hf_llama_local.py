@@ -18,3 +18,7 @@ model = ChatHuggingFace(llm=llm)
 
 result = model.invoke("types of pokemon")
 print(result.content)
+ 
+
+
+ 
