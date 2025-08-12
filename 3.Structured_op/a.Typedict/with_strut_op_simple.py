@@ -19,6 +19,14 @@ structured_model = model.with_structured_output(review_schema)
 result = structured_model.invoke("""The hardware is great, but the software feels bloated. There are too many pre-installed apps that I can't remove. Also, the UI looks outdated compared to other brands. Hoping for a software update to fix this.""")
 
 # THE FIX: Get dictionary by taking the first element
-result_dict = result[0]
-print(type(result_dict))
+result_dict = result[0] # converting to dict from list
+print(type(result_dict)) 
+
+
 print(result_dict)
+
+# First, get the nested dictionary using the 'args' key
+final_data = result_dict['args']
+# Now access the keys from the 'final_data' dictionary
+print(final_data['summary'])
+print(final_data['sentiment'])
