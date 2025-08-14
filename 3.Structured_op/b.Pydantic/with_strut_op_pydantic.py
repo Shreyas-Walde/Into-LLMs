@@ -2,19 +2,24 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.utils.function_calling import convert_to_openai_function # conversion fix 
 from dotenv import load_dotenv
 from typing import TypedDict, Annotated, Optional,Literal
+from pydantic import BaseModel, Field
 
 load_dotenv()
 
 model=ChatGoogleGenerativeAI(model='gemini-2.5-flash')
 
 # Schema
-class Review(TypedDict):
+class Review(BaseModel):
 
-    key_themes: Annotated[list[str], "Write down all the key themes dicussed in review in list"]
-    summary: Annotated[str, "A brief summary of review"]
-    sentiment: Annotated[Literal["pos", "neg"], "Return sentiment of review +,- or neutral in words"]
-    pros: Annotated[Optional[list[str]], "Write down all the pros inside list"]
-    cons: Annotated[Optional[list[str]], "Write down all the cons inside list"]
+    key_themes: list[str] = Field(description="Write down all the key themes dicussed in review in list") 
+    summary: list[str] = Field(description="A brief summary of review")
+    sentiment: Literal["pos", "neg"] = Field(description="Return sentiment of review +,- or neutral in words")
+
+    # Optinal must have default set to None
+    pros: Optional[list[str]]= Field(default=None, description= "Write down all the pros inside list")
+    cons: Optional[list[str]] = Field(default=None, description = "Write down all the cons inside list")
+    name: Optional[list[str]] = Field(default=None, description= "Write the name of the reviewer")
+
 # conversion! 
 review_schema = convert_to_openai_function(Review) # coverting
 
@@ -36,6 +41,8 @@ Cons :
 Bulky and heavy-not great for one-handed use
 Bloatware still exists in One UI
 Expensive compared to competitors
+                                 
+By Jacky Kazeyama
 """)
 # Just some stupid text above
 
@@ -48,6 +55,6 @@ result_dict = result[0] # converting to dict from list
 # First, get the nested dictionary using the 'args' key
 final_data = result_dict['args']
 # Now access the keys from the 'final_data' dictionary
-# print(final_data)
+print(final_data)
 # print(final_data['summary'])
 print(final_data['sentiment'])
