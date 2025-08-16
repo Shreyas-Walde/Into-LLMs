@@ -3,3 +3,4 @@ venv/
 *.env
 hf_cache
 __pycache__/
+.vscode 
