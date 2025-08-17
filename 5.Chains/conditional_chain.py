@@ -1,5 +1,5 @@
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
+# from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
 from dotenv import load_dotenv
 
 from langchain_core.prompts import PromptTemplate
@@ -11,17 +11,18 @@ from typing import Literal
 
 load_dotenv()
 
-# model1 = ChatGoogleGenerativeAI(model='gemini-1.5-flash')
+model1 = ChatGoogleGenerativeAI(model='gemini-2.5-flash')
 
-llm=HuggingFaceEndpoint(
-    repo_id="google/gemma-2-2b-it",
-    task="text-generation"
-)
-model1 = ChatHuggingFace(llm=llm)
+# llm=HuggingFaceEndpoint(
+#     repo_id="google/gemma-2-2b-it",
+#     task="text-generation"
+# )
+# model1 = ChatHuggingFace(llm=llm)
 
 parser = StrOutputParser()
 
 class Feedback(BaseModel):
+
     sentiment: Literal['positive', 'negative'] = Field(description='Give the sentiment of feedback')
 
 parser2 = PydanticOutputParser(pydantic_object=Feedback)  # validating parser
@@ -51,4 +52,7 @@ branch_chain = RunnableBranch(
 )
 
 chain = classifier_chain | branch_chain
-print(chain.invoke({'feedback': 'This is a terrible Phone'}))
+
+print(chain.invoke({'feedback': 'This is phone with best UI'}))
+
+chain.get_graph().print_ascii() # printing chain! 
