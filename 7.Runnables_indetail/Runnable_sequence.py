@@ -16,6 +16,11 @@ model = ChatGoogleGenerativeAI(model='gemini-1.5-flash')
 
 parser = StrOutputParser()
 
-chain = RunnableSequence(prompt1, model, parser)
+prompt2 = PromptTemplate(
+    template='Explain the following joke - {text}',
+    input_variables=['text']
+)
+
+chain = RunnableSequence(prompt1, model, parser, prompt2, model, parser)
 
 print(chain.invoke({'topic':'AI'}))
