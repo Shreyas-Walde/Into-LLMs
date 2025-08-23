@@ -4,3 +4,4 @@ venv/
 hf_cache
 __pycache__/
 .vscode 
+10.Vector_Store/my_chroma_db
