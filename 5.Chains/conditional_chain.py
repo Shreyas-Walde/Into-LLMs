@@ -1,6 +1,5 @@
 from langchain_google_genai import ChatGoogleGenerativeAI
 # from langchain_huggingface import ChatHuggingFace, HuggingFaceEndpoint
-from dotenv import load_dotenv
 
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
@@ -9,6 +8,7 @@ from langchain_core.output_parsers import PydanticOutputParser
 from pydantic import BaseModel, Field
 from typing import Literal
 
+from dotenv import load_dotenv
 load_dotenv()
 
 model1 = ChatGoogleGenerativeAI(model='gemini-2.5-flash')
